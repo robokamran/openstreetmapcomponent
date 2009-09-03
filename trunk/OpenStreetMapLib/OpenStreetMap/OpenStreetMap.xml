@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OpenStreetMap</name>
+    </assembly>
+    <members>
+        <member name="T:OpenStreetMap.TileCoordinatesConverter">
+            <summary>
+            Static class with convert functions between tile and world coordinates
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.TileCoordinatesConverter.GetTileIndex(System.Int32,System.Drawing.PointF)">
+            <summary>
+            Returns the tile coordinates for world coordinates
+            Thanks to http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#C.23
+            </summary>
+            <param name="zoom"></param>
+            <param name="coordinates"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OpenStreetMap.TileCoordinatesConverter.GetCoordinates(System.Int32,System.Drawing.PointF)">
+            <summary>
+            Returns the world coordinates for tile coordinates
+            Thanks to http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#C.23
+            </summary>
+            <param name="zoom"></param>
+            <param name="tileIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OpenStreetMap.TileManager">
+            <summary>
+            The TileManager downloads, caches and returns tiles for given zoom and coordinates
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.TileManager.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a TileManager with a dataProvider and a cacheDirectory
+            </summary>
+            <param name="dataProvider"></param>
+            <param name="cacheDirectory"></param>
+        </member>
+        <member name="M:OpenStreetMap.TileManager.GetTile(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Downloads, caches and creates tiles for given parameters.
+            </summary>
+            <param name="zoom"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OpenStreetMap.TileManager.GetOptimalZoomLevel(System.Drawing.Size,System.Drawing.PointF,System.Drawing.PointF)">
+            <summary>
+            Calculates the maximum zoom level, with which both coordinates still fit into the given size
+            </summary>
+            <param name="size"></param>
+            <param name="topLeft"></param>
+            <param name="bottomRight"></param>
+            <returns></returns>
+        </member>
+        <member name="P:OpenStreetMap.TileManager.TileSize">
+            <summary>
+            Returns the size of one tile
+            </summary>
+        </member>
+        <member name="T:OpenStreetMap.Tile">
+            <summary>
+            Contains all information about a single tile.
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.Tile.#ctor(System.Int32,System.Int32,System.Int32,System.Drawing.Bitmap)">
+            <summary>
+            Constructor setting all data of the tile
+            </summary>
+            <param name="zoom"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="picture"></param>
+        </member>
+        <member name="P:OpenStreetMap.Tile.X">
+            <summary>
+            The index of the tile in W-E direction
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.Tile.Y">
+            <summary>
+            The index of the tile in N-S direction
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.Tile.Zoom">
+            <summary>
+            The zoom level of the tile
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.Tile.Picture">
+            <summary>
+            The tile data
+            </summary>
+        </member>
+        <member name="T:OpenStreetMap.OpenStreetMapViewer">
+            <summary>
+            A Control for displaying and navigating in the OpenStreetMap
+            </summary>
+        </member>
+        <member name="F:OpenStreetMap.OpenStreetMapViewer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.#ctor">
+            <summary>
+            Initializes the component
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.SetDataProvider(System.String,System.String)">
+            <summary>
+            Creates a new TileManager with the given data provider and cache directory
+            </summary>
+            <param name="dataProvider"></param>
+            <param name="cacheDirectory"></param>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.ZoomIn(System.Drawing.PointF)">
+            <summary>
+            Zooms in one level and sets the given point as center
+            </summary>
+            <param name="zoomCenter"></param>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.ZoomIn">
+            <summary>
+            Zooms in one level
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.OpenStreetMapViewer.ZoomOut">
+            <summary>
+            Zooms out one level
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.MarkModifiers">
+            <summary>
+            MarkModifiers have to be pressed that marking a area, while holding the left mouse button pressed, will work
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.MoveModifiers">
+            <summary>
+            MoveModifiers have to be pressed that moving the viewport with dragging with the left mouse button pressed, will work
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.TopLeftCoord">
+            <summary>
+            Sets and gets the wanted coordinates of the top left corner
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.BottomRightCoord">
+            <summary>
+            Sets and gets the wanted coordinates of the bottom right corner
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.Zoom">
+            <summary>
+            Gets the actual zoom level
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.TopLeftDisplay">
+            <summary>
+            Gets the actual coordinates of the top left corner
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.BottomRightDisplay">
+            <summary>
+            Gets the actual coordinated of the bottom right corner
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.DataProvider">
+            <summary>
+            Gets the dataProvider for the tiles, default is http://tile.openstreetmap.org/
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.CacheDirectory">
+            <summary>
+            Gets the cache directory for the TileManager, use different caches for di
+            </summary>
+        </member>
+        <member name="E:OpenStreetMap.OpenStreetMapViewer.CoordinatePointed">
+            <summary>
+            Event is thrown, when a coordinate is pointed with the mouse
+            </summary>
+        </member>
+        <member name="E:OpenStreetMap.OpenStreetMapViewer.CoordinateClicked">
+            <summary>
+            Event is thrown, when a coordinate is clicked with the mouse
+            </summary>
+        </member>
+        <member name="E:OpenStreetMap.OpenStreetMapViewer.CoordinatesMarked">
+            <summary>
+            Event is thrown, when the user marked a area with the mouse
+            coord1 is top left corner, coord2 is bottom right corner
+            </summary>
+        </member>
+        <member name="E:OpenStreetMap.OpenStreetMapViewer.DisplayedAreaChanged">
+            <summary>
+            Event is thrown, when the displayed area has changed
+            coord1 is top left corner, coord2 is bottom right corner
+            </summary>
+        </member>
+        <member name="T:OpenStreetMap.OpenStreetMapViewer.CoordinateHandler">
+            <summary>
+            Event handler for one coordinate
+            </summary>
+            <param name="coord"></param>
+        </member>
+        <member name="T:OpenStreetMap.OpenStreetMapViewer.CoordinatesHandler">
+            <summary>
+            Event handler for two coordinates
+            </summary>
+            <param name="coord1"></param>
+            <param name="coord2"></param>
+        </member>
+        <member name="T:OpenStreetMap.OpenStreetMapViewer.CoordinatesZoomHandler">
+            <summary>
+            Event handler for two coordinates and zoom level
+            </summary>
+            <param name="coord1"></param>
+            <param name="coord2"></param>
+            <param name="zoom"></param>
+        </member>
+    </members>
+</doc>
