@@ -1,0 +1,10 @@
+#summary Usage of the OpenStreetMapViewer
+
+= Introduction =
+Here is shown a short overview of the usage of the OpenStreepMapViewer component and it's structure
+
+= Quickstart instructions =
+
+
+
+= Structure overview =
