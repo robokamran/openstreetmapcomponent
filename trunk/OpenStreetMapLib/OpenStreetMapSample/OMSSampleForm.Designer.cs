@@ -71,10 +71,14 @@ namespace OpenStreetMapSample
             this.label15 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.tbDataProvider = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbNWLngDeg
@@ -111,6 +115,7 @@ namespace OpenStreetMapSample
             // 
             // reloadMapButton
             // 
+            this.reloadMapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.reloadMapButton.Location = new System.Drawing.Point(683, 182);
             this.reloadMapButton.Name = "reloadMapButton";
             this.reloadMapButton.Size = new System.Drawing.Size(145, 23);
@@ -121,6 +126,7 @@ namespace OpenStreetMapSample
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.tbNWLatMin);
             this.groupBox1.Controls.Add(this.tbNWLngMin);
             this.groupBox1.Controls.Add(this.label5);
@@ -190,6 +196,7 @@ namespace OpenStreetMapSample
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.tbSELatMin);
             this.groupBox2.Controls.Add(this.tbSELngMin);
             this.groupBox2.Controls.Add(this.label6);
@@ -408,13 +415,18 @@ namespace OpenStreetMapSample
             // 
             // openStreetMapViewer1
             // 
+            this.openStreetMapViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.openStreetMapViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.openStreetMapViewer1.CenterCoord = ((System.Drawing.PointF)(resources.GetObject("openStreetMapViewer1.CenterCoord")));
             this.openStreetMapViewer1.Location = new System.Drawing.Point(164, 14);
             this.openStreetMapViewer1.MarkModifiers = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.None)));
-            this.openStreetMapViewer1.MoveModifiers = ((System.Windows.Forms.Keys)(System.Windows.Forms.Keys.None));
+            this.openStreetMapViewer1.MoveModifiers = System.Windows.Forms.Keys.None;
             this.openStreetMapViewer1.Name = "openStreetMapViewer1";
             this.openStreetMapViewer1.Size = new System.Drawing.Size(512, 512);
             this.openStreetMapViewer1.TabIndex = 0;
+            this.openStreetMapViewer1.Zoom = 1;
             this.openStreetMapViewer1.CoordinatePointed += new OpenStreetMap.OpenStreetMapViewer.CoordinateHandler(this.openStreetMapViewer1_CoordinatesPointed);
             this.openStreetMapViewer1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.openStreetMapViewer1_MouseDoubleClick);
             this.openStreetMapViewer1.DisplayedAreaChanged += new OpenStreetMap.OpenStreetMapViewer.CoordinatesZoomHandler(this.openStreetMapViewer1_DisplayedAreaChanged);
@@ -434,6 +446,7 @@ namespace OpenStreetMapSample
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.buttonTileManager);
             this.groupBox4.Controls.Add(this.tbCacheDirectory);
             this.groupBox4.Controls.Add(this.label15);
@@ -491,12 +504,44 @@ namespace OpenStreetMapSample
             this.tbDataProvider.TabIndex = 10;
             this.tbDataProvider.Text = "http://tile.openstreetmap.org/";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.button2);
+            this.groupBox5.Controls.Add(this.button1);
+            this.groupBox5.Location = new System.Drawing.Point(683, 381);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(148, 86);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "OverlayItem";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(8, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(134, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Add to clicked Coords";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(9, 48);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(133, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Clear all";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // OpenStreetMapSample
             // 
             this.AcceptButton = this.reloadMapButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 536);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.groupBox3);
@@ -515,6 +560,7 @@ namespace OpenStreetMapSample
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -563,5 +609,8 @@ namespace OpenStreetMapSample
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbDataProvider;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }

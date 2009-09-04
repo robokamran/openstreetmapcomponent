@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using OpenStreetMap;
 
 namespace OpenStreetMapSample
 {
@@ -99,6 +100,30 @@ namespace OpenStreetMapSample
 
         private void openStreetMapViewer1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            OverlayItem item = new OverlayItem();
+            item.Coord = new PointF(float.Parse(tbClickedLng.Text), float.Parse(tbClickedLat.Text));
+            Bitmap b = new Bitmap(64, 64);
+            Graphics g = Graphics.FromImage(b);
+            Pen pen = new Pen(Color.Black, 3.0f);
+            g.Clear(BackColor);
+            g.DrawLine(pen, new Point(1, 1), new Point(62, 1));
+            g.DrawLine(pen, new Point(1, 1), new Point(31, 62));
+            g.DrawLine(pen, new Point(62, 1), new Point(31, 62));
+            g.Dispose();
+            item.Icon = b;
+            item.Offset = new Point(31,64);
+            item.ToolTip = "Test";
+            item.Transparent = BackColor;
+            openStreetMapViewer1.AddOverlayItem(item);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            openStreetMapViewer1.ClearOverlayItems();
         }
     }
 }
