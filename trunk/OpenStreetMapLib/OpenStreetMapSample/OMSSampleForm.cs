@@ -79,8 +79,6 @@ namespace OpenStreetMapSample
 
         private void openStreetMapViewer1_CoordinatesMarked(PointF coord1, PointF coord2)
         {
-            openStreetMapViewer1.TopLeftCoord = coord1;
-            openStreetMapViewer1.BottomRightCoord = coord2;
         }
 
         private void openStreetMapViewer1_DisplayedAreaChanged(PointF coord1, PointF coord2, int zoom)
@@ -99,7 +97,6 @@ namespace OpenStreetMapSample
 
         private void openStreetMapViewer1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            openStreetMapViewer1.ZoomOut();
         }
     }
 }

@@ -40,16 +40,18 @@ namespace OpenStreetMap
             get { return moveModifiers; }
             set { moveModifiers = value; }
         }
+
         /// <summary>
         /// Sets and gets the wanted coordinates of the top left corner
         /// </summary>
         public PointF TopLeftCoord
         {
-            get { return new PointF(topLeftCoord.X, topLeftCoord.Y); }
+            private get { return topLeftCoord; }
             set
             {
                 topLeftCoord = value;
-                displayedRegionChanged();
+                CenterCoord = new PointF((topLeftCoord.X + BottomRightCoord.X) / 2.0f, (topLeftCoord.Y + BottomRightCoord.Y) / 2.0f);
+                Zoom = tileManager.GetOptimalZoomLevel(this.Size, TopLeftCoord, BottomRightCoord);
             }
         }
         /// <summary>
@@ -57,34 +59,55 @@ namespace OpenStreetMap
         /// </summary>
         public PointF BottomRightCoord
         {
-            get { return new PointF(bottomRightCoord.X, bottomRightCoord.Y); }
+            private get { return bottomRightCoord; }
             set
             {
                 bottomRightCoord = value;
+                CenterCoord = new PointF((topLeftCoord.X + BottomRightCoord.X) / 2.0f, (topLeftCoord.Y + BottomRightCoord.Y) / 2.0f);
+                Zoom = tileManager.GetOptimalZoomLevel(this.Size, TopLeftCoord, BottomRightCoord);
+            }
+        }
+
+        /// <summary>
+        /// Sets and gets the center point
+        /// </summary>
+        public PointF CenterCoord
+        {
+            get { return centerCoord; }
+            set
+            {
+                centerCoord = value;
                 displayedRegionChanged();
             }
         }
         /// <summary>
-        /// Gets the actual zoom level
+        /// Sets and gets the actual zoom level
         /// </summary>
         public int Zoom
         {
             get { return zoom; }
+            set
+            {
+                zoom = value < tileManager.MinZoom ? tileManager.MinZoom : (value > tileManager.MaxZoom ? tileManager.MaxZoom : value);
+                displayedRegionChanged();
+            }
         }
+
         /// <summary>
         /// Gets the actual coordinates of the top left corner
         /// </summary>
         public PointF TopLeftDisplay
         {
-            get { return new PointF(topLeftDisplay.X, topLeftDisplay.Y); }
+            get { return TileCoordinatesConverter.GetCoordinates(zoom, topLeftTile); }
         }
         /// <summary>
         /// Gets the actual coordinated of the bottom right corner
         /// </summary>
         public PointF BottomRightDisplay
         {
-            get { return new PointF(bottomRightDisplay.X, bottomRightDisplay.Y); }
+            get { return TileCoordinatesConverter.GetCoordinates(zoom, topLeftTile); }
         }
+
         /// <summary>
         /// Gets the dataProvider for the tiles, default is http://tile.openstreetmap.org/
         /// </summary>
@@ -164,12 +187,13 @@ namespace OpenStreetMap
         #endregion
 
         #region private members
+        PointF centerCoord = new PointF(0.0f, 0.0f);
+        int zoom = 0;
+
         PointF topLeftCoord = new PointF(-179, 85);
         PointF bottomRightCoord = new PointF(179, -85);
-        PointF topLeftDisplay = new PointF(0, 0);
-        PointF bottomRightDisplay = new PointF(0, 0);
         PointF topLeftTile = new PointF(0, 0);
-        int zoom = 0;
+        PointF bottomRightTile = new PointF(0, 0);
         Bitmap bitmap = null;
         PointF lastClickedCoord = new PointF();
         Point lastMouseClick = new Point();
@@ -202,54 +226,16 @@ namespace OpenStreetMap
             displayedRegionChanged();
         }
 
-        /// <summary>
-        /// Zooms in one level and sets the given point as center
-        /// </summary>
-        /// <param name="zoomCenter"></param>
-        public void ZoomIn(PointF zoomCenter)
-        {
-            float xDiff = bottomRightDisplay.X - topLeftDisplay.X;
-            float yDiff = topLeftDisplay.Y - bottomRightDisplay.Y;
-            TopLeftCoord = new PointF(zoomCenter.X - xDiff / 4.0f, zoomCenter.Y + yDiff / 4.0f);
-            BottomRightCoord = new PointF(zoomCenter.X + xDiff / 4.0f, zoomCenter.Y - yDiff / 4.0f);
-        }
-
-        /// <summary>
-        /// Zooms in one level
-        /// </summary>
-        public void ZoomIn()
-        {
-            PointF center = new PointF((topLeftDisplay.X + bottomRightDisplay.X) / 2.0f, (topLeftDisplay.Y + bottomRightDisplay.Y) / 2.0f);
-            ZoomIn(center);
-        }
-
-        /// <summary>
-        /// Zooms out one level
-        /// </summary>
-        public void ZoomOut()
-        {
-            if (zoom <= 1)
-                return;
-            PointF center = new PointF((topLeftDisplay.X + bottomRightDisplay.X) / 2.0f, (topLeftDisplay.Y + bottomRightDisplay.Y) / 2.0f);
-            float xDiff = bottomRightDisplay.X - topLeftDisplay.X;
-            float yDiff = topLeftDisplay.Y - bottomRightDisplay.Y;
-            TopLeftCoord = new PointF(center.X - xDiff, center.Y + yDiff);
-            BottomRightCoord = new PointF(center.X + xDiff, center.Y - yDiff);
-        }
-
         #region private methods
         private void displayedRegionChanged()
         {
             //calculating viewport
-            Size paintingArea = new Size(Size.Width, Size.Height);
-            zoom = tileManager.GetOptimalZoomLevel(paintingArea, TopLeftCoord, BottomRightCoord);
-            PointF center = new PointF((TopLeftCoord.X + BottomRightCoord.X) / 2.0f, (TopLeftCoord.Y + BottomRightCoord.Y) / 2.0f);
-            PointF centerTile = TileCoordinatesConverter.GetTileIndex(zoom, center);
-            SizeF viewportSizeInTiles = new SizeF((float)paintingArea.Width / (float)tileManager.TileSize.Width, (float)paintingArea.Height / (float)tileManager.TileSize.Height);
+            PointF centerTile = TileCoordinatesConverter.GetTileIndex(Zoom, CenterCoord);
+            SizeF viewportSizeInTiles = new SizeF((float)Size.Width / (float)tileManager.TileSize.Width, (float)Size.Height / (float)tileManager.TileSize.Height);
+
             topLeftTile = new PointF(centerTile.X - viewportSizeInTiles.Width / 2.0f, centerTile.Y - viewportSizeInTiles.Height / 2.0f);
-            PointF bottomRightTile = new PointF(centerTile.X + viewportSizeInTiles.Width / 2.0f, centerTile.Y + viewportSizeInTiles.Height / 2.0f);
-            topLeftDisplay = TileCoordinatesConverter.GetCoordinates(zoom, topLeftTile);
-            bottomRightDisplay = TileCoordinatesConverter.GetCoordinates(zoom, bottomRightTile);
+            bottomRightTile = new PointF(centerTile.X + viewportSizeInTiles.Width / 2.0f, centerTile.Y + viewportSizeInTiles.Height / 2.0f);
+
             Point offset = new Point(Convert.ToInt32(Math.Round((topLeftTile.X - Math.Truncate(topLeftTile.X)) * tileManager.TileSize.Width)), Convert.ToInt32(Math.Round((topLeftTile.Y - Math.Truncate(topLeftTile.Y)) * tileManager.TileSize.Height)));
 
             //generate bitmap
@@ -273,7 +259,7 @@ namespace OpenStreetMap
             }
             g.Dispose();
             this.Invalidate();
-            displayedAreaChanged(new PointF(topLeftDisplay.X, topLeftDisplay.Y), new PointF(bottomRightDisplay.X, bottomRightDisplay.Y), zoom);
+            displayedAreaChanged(TopLeftDisplay, BottomRightDisplay, Zoom);
         }
 
         private Point roundDownCoordinates(PointF point)
@@ -295,7 +281,7 @@ namespace OpenStreetMap
         {
             try
             {
-                e.Graphics.DrawImageUnscaled(bitmap, 1, 1);
+                e.Graphics.DrawImageUnscaled(bitmap, 0, 0);
                 if (startedAction == ActionType.move)
                     e.Graphics.DrawLine(Pens.Black, lastMouseClick, actMousePosition);
                 if (startedAction == ActionType.mark)
@@ -352,14 +338,15 @@ namespace OpenStreetMap
                     float xMax = Math.Max(lastClickedCoord.X, pointTile.X);
                     float yMin = Math.Min(lastClickedCoord.Y, pointTile.Y);
                     float yMax = Math.Max(lastClickedCoord.Y, pointTile.Y);
+                    TopLeftCoord = new PointF(xMin, yMax);
+                    BottomRightCoord = new PointF(xMax, yMin);
                     coordinatesMarked(new PointF(xMin, yMax), new PointF(xMax, yMin));
                 }
                 if (startedAction == ActionType.move && ModifierKeys == moveModifiers)
                 {
                     PointF pointTile = TileCoordinatesConverter.GetCoordinates(zoom, getTileCoordinatesFromLocation(e.Location));
                     PointF diff = new PointF(lastClickedCoord.X - pointTile.X, lastClickedCoord.Y - pointTile.Y);
-                    TopLeftCoord = new PointF(TopLeftCoord.X + diff.X, TopLeftCoord.Y + diff.Y);
-                    BottomRightCoord = new PointF(BottomRightCoord.X + diff.X, BottomRightCoord.Y + diff.Y);
+                    CenterCoord = new PointF(CenterCoord.X + diff.X, CenterCoord.Y + diff.Y);
                 }
             }
             startedAction = ActionType.none;
@@ -378,9 +365,12 @@ namespace OpenStreetMap
         void OpenStreetMapViewer_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
-                ZoomIn(TileCoordinatesConverter.GetCoordinates(zoom, getTileCoordinatesFromLocation(e.Location)));
+            {
+                Zoom += 1;
+                CenterCoord = TileCoordinatesConverter.GetCoordinates(zoom, getTileCoordinatesFromLocation(e.Location));
+            }
             if (e.Delta < 0)
-                ZoomOut();
+                Zoom -= 1;
         }
 
         private void OpenStreetMapViewer_MouseHover(object sender, EventArgs e)
