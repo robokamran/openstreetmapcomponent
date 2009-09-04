@@ -77,7 +77,7 @@ namespace OpenStreetMap
             set
             {
                 centerCoord = value;
-                displayedRegionChanged();
+                renderMap();
             }
         }
         /// <summary>
@@ -89,7 +89,7 @@ namespace OpenStreetMap
             set
             {
                 zoom = value < tileManager.MinZoom ? tileManager.MinZoom : (value > tileManager.MaxZoom ? tileManager.MaxZoom : value);
-                displayedRegionChanged();
+                renderMap();
             }
         }
 
@@ -190,6 +190,8 @@ namespace OpenStreetMap
         PointF centerCoord = new PointF(0.0f, 0.0f);
         int zoom = 0;
 
+        List<OverlayItem> overlayItems = new List<OverlayItem>();
+
         PointF topLeftCoord = new PointF(-179, 85);
         PointF bottomRightCoord = new PointF(179, -85);
         PointF topLeftTile = new PointF(0, 0);
@@ -215,6 +217,7 @@ namespace OpenStreetMap
             this.MouseWheel += new MouseEventHandler(OpenStreetMapViewer_MouseWheel);
         }
 
+        #region public methods
         /// <summary>
         /// Creates a new TileManager with the given data provider and cache directory
         /// </summary>
@@ -223,11 +226,43 @@ namespace OpenStreetMap
         public void SetDataProvider(string dataProvider, string cacheDirectory)
         {
             tileManager = new TileManager(dataProvider, cacheDirectory);
-            displayedRegionChanged();
+            renderMap();
         }
 
+        /// <summary>
+        /// Removes all overlay items
+        /// </summary>
+        public void ClearOverlayItems()
+        {
+            overlayItems.Clear();
+            renderMap();
+        }
+
+        /// <summary>
+        /// Adds an overlay item
+        /// </summary>
+        /// <param name="item"></param>
+        public void AddOverlayItem(OverlayItem item)
+        {
+            if (item == null)
+                return;
+            overlayItems.Add(item);
+            renderMap();
+        }
+
+        /// <summary>
+        /// Removes the given overlay item
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool RemoveOverlayItem(OverlayItem item)
+        {
+            return overlayItems.Remove(item);
+        }
+        #endregion
+
         #region private methods
-        private void displayedRegionChanged()
+        private void renderMap()
         {
             //calculating viewport
             PointF centerTile = TileCoordinatesConverter.GetTileIndex(Zoom, CenterCoord);
@@ -236,30 +271,49 @@ namespace OpenStreetMap
             topLeftTile = new PointF(centerTile.X - viewportSizeInTiles.Width / 2.0f, centerTile.Y - viewportSizeInTiles.Height / 2.0f);
             bottomRightTile = new PointF(centerTile.X + viewportSizeInTiles.Width / 2.0f, centerTile.Y + viewportSizeInTiles.Height / 2.0f);
 
-            Point offset = new Point(Convert.ToInt32(Math.Round((topLeftTile.X - Math.Truncate(topLeftTile.X)) * tileManager.TileSize.Width)), Convert.ToInt32(Math.Round((topLeftTile.Y - Math.Truncate(topLeftTile.Y)) * tileManager.TileSize.Height)));
-
-            //generate bitmap
+            //generate bitmap with tiles
             bitmap = new Bitmap(Size.Width, Size.Height);
             Graphics g = Graphics.FromImage(bitmap);
-            int xCount = 0;
-            int yCount = 0;
             for (int x = roundDownCoordinates(topLeftTile).X; x <= roundDownCoordinates(bottomRightTile).X; x++)
-            {
                 for (int y = roundDownCoordinates(topLeftTile).Y; y <= roundDownCoordinates(bottomRightTile).Y; y++)
                 {
                     Tile tile = tileManager.GetTile(zoom, x, y);
                     if (tile != null)
-                    {
-                        g.DrawImageUnscaled(tile.Picture, xCount * tileManager.TileSize.Width - offset.X, yCount * tileManager.TileSize.Height - offset.Y);
-                    }
-                    yCount++;
+                        g.DrawImageUnscaled(tile.Picture, getLocationForTileIndex(tile.X, tile.Y));
                 }
-                xCount++;
-                yCount = 0;
+            //render overlay items
+            foreach (OverlayItem item in overlayItems)
+            {
+                if (item.Icon != null)
+                {
+                    ImageAttributes attr = new ImageAttributes();
+                    attr.SetColorKey(item.Transparent, item.Transparent);
+                    Point loc = getLocationForCoordinates(item.Coord);
+                    loc.X -= item.Offset.X;
+                    loc.Y -= item.Offset.Y;
+                    Rectangle destRect = new Rectangle(loc, item.Icon.Size);
+                    g.DrawImage(item.Icon, destRect, 0, 0, item.Icon.Size.Width, item.Icon.Size.Height, GraphicsUnit.Pixel, attr);
+                }
             }
+
             g.Dispose();
             this.Invalidate();
             displayedAreaChanged(TopLeftDisplay, BottomRightDisplay, Zoom);
+        }
+
+        private Point getLocationForTileIndex(float x, float y)
+        {
+            float offsetTileX = x - topLeftTile.X;
+            float offsetTileY = y - topLeftTile.Y;
+            int offsetX = (int)Math.Round(offsetTileX * tileManager.TileSize.Width);
+            int offsetY = (int)Math.Round(offsetTileY * tileManager.TileSize.Height);
+            return new Point(offsetX, offsetY);
+        }
+
+        private Point getLocationForCoordinates(PointF coord)
+        {
+            PointF tileIndex = TileCoordinatesConverter.GetTileIndex(Zoom, coord);
+            return getLocationForTileIndex(tileIndex.X, tileIndex.Y);
         }
 
         private Point roundDownCoordinates(PointF point)

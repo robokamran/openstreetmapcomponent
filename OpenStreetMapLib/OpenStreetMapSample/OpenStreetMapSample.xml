@@ -14,6 +14,11 @@
             A sample implementation showing the features of the OpenStreetMapViewer component
             </summary>
         </member>
+        <member name="M:OpenStreetMapSample.OpenStreetMapSample.#ctor">
+            <summary>
+            Constructor, initializes the component
+            </summary>
+        </member>
         <member name="F:OpenStreetMapSample.OpenStreetMapSample.components">
             <summary>
             Required designer variable.
@@ -29,11 +34,6 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:OpenStreetMapSample.OpenStreetMapSample.#ctor">
-            <summary>
-            Constructor, initializes the component
             </summary>
         </member>
         <member name="T:OpenStreetMapSample.Properties.Resources">

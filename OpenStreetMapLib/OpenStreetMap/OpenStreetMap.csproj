@@ -66,6 +66,8 @@
     <Compile Include="OpenStreetMapViewer.Designer.cs">
       <DependentUpon>OpenStreetMapViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="OverlayItem.cs">
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileCoordinatesConverter.cs" />
