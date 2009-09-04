@@ -4,64 +4,6 @@
         <name>OpenStreetMap</name>
     </assembly>
     <members>
-        <member name="T:OpenStreetMap.TileCoordinatesConverter">
-            <summary>
-            Static class with convert functions between tile and world coordinates
-            </summary>
-        </member>
-        <member name="M:OpenStreetMap.TileCoordinatesConverter.GetTileIndex(System.Int32,System.Drawing.PointF)">
-            <summary>
-            Returns the tile coordinates for world coordinates
-            Thanks to http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#C.23
-            </summary>
-            <param name="zoom"></param>
-            <param name="coordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OpenStreetMap.TileCoordinatesConverter.GetCoordinates(System.Int32,System.Drawing.PointF)">
-            <summary>
-            Returns the world coordinates for tile coordinates
-            Thanks to http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#C.23
-            </summary>
-            <param name="zoom"></param>
-            <param name="tileIndex"></param>
-            <returns></returns>
-        </member>
-        <member name="T:OpenStreetMap.TileManager">
-            <summary>
-            The TileManager downloads, caches and returns tiles for given zoom and coordinates
-            </summary>
-        </member>
-        <member name="M:OpenStreetMap.TileManager.#ctor(System.String,System.String)">
-            <summary>
-            Initializes a TileManager with a dataProvider and a cacheDirectory
-            </summary>
-            <param name="dataProvider"></param>
-            <param name="cacheDirectory"></param>
-        </member>
-        <member name="M:OpenStreetMap.TileManager.GetTile(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Downloads, caches and creates tiles for given parameters.
-            </summary>
-            <param name="zoom"></param>
-            <param name="x"></param>
-            <param name="y"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OpenStreetMap.TileManager.GetOptimalZoomLevel(System.Drawing.Size,System.Drawing.PointF,System.Drawing.PointF)">
-            <summary>
-            Calculates the maximum zoom level, with which both coordinates still fit into the given size
-            </summary>
-            <param name="size"></param>
-            <param name="topLeft"></param>
-            <param name="bottomRight"></param>
-            <returns></returns>
-        </member>
-        <member name="P:OpenStreetMap.TileManager.TileSize">
-            <summary>
-            Returns the size of one tile
-            </summary>
-        </member>
         <member name="T:OpenStreetMap.Tile">
             <summary>
             Contains all information about a single tile.
@@ -95,6 +37,29 @@
             <summary>
             The tile data
             </summary>
+        </member>
+        <member name="T:OpenStreetMap.TileCoordinatesConverter">
+            <summary>
+            Static class with convert functions between tile and world coordinates
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.TileCoordinatesConverter.GetTileIndex(System.Int32,System.Drawing.PointF)">
+            <summary>
+            Returns the tile coordinates for world coordinates
+            Thanks to http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#C.23
+            </summary>
+            <param name="zoom"></param>
+            <param name="coordinates"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OpenStreetMap.TileCoordinatesConverter.GetCoordinates(System.Int32,System.Drawing.PointF)">
+            <summary>
+            Returns the world coordinates for tile coordinates
+            Thanks to http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#C.23
+            </summary>
+            <param name="zoom"></param>
+            <param name="tileIndex"></param>
+            <returns></returns>
         </member>
         <member name="T:OpenStreetMap.OpenStreetMapViewer">
             <summary>
@@ -130,22 +95,6 @@
             <param name="dataProvider"></param>
             <param name="cacheDirectory"></param>
         </member>
-        <member name="M:OpenStreetMap.OpenStreetMapViewer.ZoomIn(System.Drawing.PointF)">
-            <summary>
-            Zooms in one level and sets the given point as center
-            </summary>
-            <param name="zoomCenter"></param>
-        </member>
-        <member name="M:OpenStreetMap.OpenStreetMapViewer.ZoomIn">
-            <summary>
-            Zooms in one level
-            </summary>
-        </member>
-        <member name="M:OpenStreetMap.OpenStreetMapViewer.ZoomOut">
-            <summary>
-            Zooms out one level
-            </summary>
-        </member>
         <member name="P:OpenStreetMap.OpenStreetMapViewer.MarkModifiers">
             <summary>
             MarkModifiers have to be pressed that marking a area, while holding the left mouse button pressed, will work
@@ -166,9 +115,14 @@
             Sets and gets the wanted coordinates of the bottom right corner
             </summary>
         </member>
+        <member name="P:OpenStreetMap.OpenStreetMapViewer.CenterCoord">
+            <summary>
+            Sets and gets the center point
+            </summary>
+        </member>
         <member name="P:OpenStreetMap.OpenStreetMapViewer.Zoom">
             <summary>
-            Gets the actual zoom level
+            Sets and gets the actual zoom level
             </summary>
         </member>
         <member name="P:OpenStreetMap.OpenStreetMapViewer.TopLeftDisplay">
@@ -233,6 +187,51 @@
             <param name="coord1"></param>
             <param name="coord2"></param>
             <param name="zoom"></param>
+        </member>
+        <member name="T:OpenStreetMap.TileManager">
+            <summary>
+            The TileManager downloads, caches and returns tiles for given zoom and coordinates
+            </summary>
+        </member>
+        <member name="M:OpenStreetMap.TileManager.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a TileManager with a dataProvider and a cacheDirectory
+            </summary>
+            <param name="dataProvider"></param>
+            <param name="cacheDirectory"></param>
+        </member>
+        <member name="M:OpenStreetMap.TileManager.GetTile(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Downloads, caches and creates tiles for given parameters.
+            </summary>
+            <param name="zoom"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OpenStreetMap.TileManager.GetOptimalZoomLevel(System.Drawing.Size,System.Drawing.PointF,System.Drawing.PointF)">
+            <summary>
+            Calculates the maximum zoom level, with which both coordinates still fit into the given size
+            </summary>
+            <param name="size"></param>
+            <param name="topLeft"></param>
+            <param name="bottomRight"></param>
+            <returns></returns>
+        </member>
+        <member name="P:OpenStreetMap.TileManager.MinZoom">
+            <summary>
+            Sets and gets the minimum zoom level
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.TileManager.MaxZoom">
+            <summary>
+            Sets and gets the maximum zoom level
+            </summary>
+        </member>
+        <member name="P:OpenStreetMap.TileManager.TileSize">
+            <summary>
+            Returns the size of one tile
+            </summary>
         </member>
     </members>
 </doc>

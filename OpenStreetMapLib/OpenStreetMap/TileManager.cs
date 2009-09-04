@@ -23,6 +23,24 @@ namespace OpenStreetMap
         {
             get { return dataProvider; }
         }
+        private int minZoom = 1;
+        /// <summary>
+        /// Sets and gets the minimum zoom level
+        /// </summary>
+        public int MinZoom
+        {
+            get { return minZoom; }
+            set { minZoom = value; }
+        }
+        private int maxZoom = 17;
+        /// <summary>
+        /// Sets and gets the maximum zoom level
+        /// </summary>
+        public int MaxZoom
+        {
+            get { return maxZoom; }
+            set { maxZoom = value; }
+        }
         Dictionary<int, Dictionary<int, Dictionary<int, Bitmap>>> tiles = new Dictionary<int, Dictionary<int, Dictionary<int, Bitmap>>>();
 
         /// <summary>
@@ -88,8 +106,8 @@ namespace OpenStreetMap
             {
                 zoom = 100;
             }
-            zoom = (zoom < 1) ? 1 : zoom;   // minimal zoom is 1
-            zoom = (zoom > 17) ? 17 : zoom;  // maximal zoom for osmarender is 17
+            zoom = (zoom < minZoom) ? minZoom : zoom;   // minimal zoom is 1
+            zoom = (zoom > maxZoom) ? maxZoom : zoom;  // maximal zoom for osmarender is 17
 
             return zoom;
         }
