@@ -62,6 +62,8 @@ namespace OpenStreetMapSample
 
         private void OpenStreetMapSample_Load(object sender, EventArgs e)
         {
+            openStreetMapViewer1.CenterCoord = new PointF(0, 0);
+            openStreetMapViewer1.Zoom = 1;
             UpdateMapStatistic();
         }
 

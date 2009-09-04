@@ -409,14 +409,12 @@ namespace OpenStreetMapSample
             // openStreetMapViewer1
             // 
             this.openStreetMapViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.openStreetMapViewer1.BottomRightCoord = ((System.Drawing.PointF)(resources.GetObject("openStreetMapViewer1.BottomRightCoord")));
             this.openStreetMapViewer1.Location = new System.Drawing.Point(164, 14);
             this.openStreetMapViewer1.MarkModifiers = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.None)));
             this.openStreetMapViewer1.MoveModifiers = ((System.Windows.Forms.Keys)(System.Windows.Forms.Keys.None));
             this.openStreetMapViewer1.Name = "openStreetMapViewer1";
             this.openStreetMapViewer1.Size = new System.Drawing.Size(512, 512);
             this.openStreetMapViewer1.TabIndex = 0;
-            this.openStreetMapViewer1.TopLeftCoord = ((System.Drawing.PointF)(resources.GetObject("openStreetMapViewer1.TopLeftCoord")));
             this.openStreetMapViewer1.CoordinatePointed += new OpenStreetMap.OpenStreetMapViewer.CoordinateHandler(this.openStreetMapViewer1_CoordinatesPointed);
             this.openStreetMapViewer1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.openStreetMapViewer1_MouseDoubleClick);
             this.openStreetMapViewer1.DisplayedAreaChanged += new OpenStreetMap.OpenStreetMapViewer.CoordinatesZoomHandler(this.openStreetMapViewer1_DisplayedAreaChanged);
