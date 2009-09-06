@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Drawing.Imaging;
 using System.Net.Cache;
+using QuickZip.MiniHtml.Controls;
 
 namespace OpenStreetMap
 {
@@ -122,6 +123,15 @@ namespace OpenStreetMap
         {
             get { return tileManager.CacheDirectory; }
         }
+
+        /// <summary>
+        /// Gets and sets the ccs for the tooltips
+        /// </summary>
+        public string CSS
+        {
+            get { return css; }
+            set { css = value; }
+        }
         #endregion
 
         #region events
@@ -204,6 +214,8 @@ namespace OpenStreetMap
         Keys markModifiers = Keys.Shift;
         Keys moveModifiers = Keys.None;
         TileManager tileManager = new TileManager("http://tile.openstreetmap.org/", "Cache");
+        mhLabel toolTip = null;
+        string css = "";
         #endregion
 
         /// <summary>
@@ -352,9 +364,35 @@ namespace OpenStreetMap
 
         private void OpenStreetMapViewer_MouseMove(object sender, MouseEventArgs e)
         {
+            // pointed coordinate
             PointF pointTile = new PointF((float)e.X / (float)tileManager.TileSize.Width + topLeftTile.X, (float)e.Y / (float)tileManager.TileSize.Height + topLeftTile.Y);
             coordinatePointed(TileCoordinatesConverter.GetCoordinates(zoom, pointTile));
             actMousePosition = e.Location;
+
+            //tooltip hide/ show
+            if (toolTip != null)
+            {
+                if (e.X < toolTip.Left || e.X > toolTip.Right || e.Y < toolTip.Top || e.Y > toolTip.Bottom)
+                    removeToolTip();
+            }
+            else if(startedAction== ActionType.none)
+            {
+                int offset = 5;
+                foreach (OverlayItem item in overlayItems)
+                {
+                    Point loc = getLocationForCoordinates(item.Coord);
+                    if (loc.X >= e.X - offset &&
+                        loc.X <= e.X + offset &&
+                        loc.Y >= e.Y - offset &&
+                        loc.Y <= e.Y + offset)
+                    {
+                        addToolTip(loc, item.ToolTip);
+                        break;
+                    }
+                }
+            }
+
+            // repaint
             if(startedAction != ActionType.none)
                 Invalidate();
         }
@@ -427,9 +465,26 @@ namespace OpenStreetMap
                 Zoom -= 1;
         }
 
-        private void OpenStreetMapViewer_MouseHover(object sender, EventArgs e)
+        private void addToolTip(Point location, string hint)
         {
-            this.Focus();
+            if (toolTip != null)
+                return;
+            toolTip = new mhLabel();
+            toolTip.Size = new Size(150, 40);
+            toolTip.Location = new Point(location.X - toolTip.Width / 2, location.Y - toolTip.Height / 2);
+            toolTip.BorderStyle = BorderStyle.Fixed3D;
+            toolTip.Html = hint;
+            toolTip.Css = CSS;
+            this.Controls.Add(toolTip);
+        }
+
+        private void removeToolTip()
+        {
+            if (toolTip == null)
+                return;
+            this.Controls.Remove(toolTip);
+            toolTip.Dispose();
+            toolTip = null;
         }
         #endregion
     }

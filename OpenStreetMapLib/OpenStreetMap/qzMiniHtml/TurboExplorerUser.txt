@@ -1,0 +1,44 @@
+TurboExplorer IDE do not support adding 3rd party component, so there are no IDE support
+for the component, if you still want to use it, you can do the following steps: 
+
+For Turbo Delphi.Net user - How to use mhLabel
+----------------------------------------------
+
+1. Create a new project, and add qzMiniHtml_11.dll as reference (under project manager)
+2. Add QuickZip.MiniHtml and QuickZip.MiniHtml.Controls to the uses list.
+3. Copy and paste the following code to your project:
+
+function Add_MiniHtmlLabel(owner : Panel) : mhLabel;
+var retVal : QuickZip.MiniHtml.Controls.mhLabel;
+begin
+  retVal := QuickZip.MiniHtml.Controls.mhLabel.Create();
+
+  owner.Controls.Add(retVal);
+  retVal.Dock := DockStyle.Fill;
+
+  result := retVal;
+end;
+
+4. Add a Panel to where you wish to place the label.
+5. Add "mhLabel1 : mhLabel;" in the public section of your form.
+6. Copy and paste the following code to the constructor of your form, next to the TODO: code.
+
+mhLabel1 := Add_MiniHtmlLabel(Panel1);
+mhLabel1.BackColor := Panel1.BackColor;
+mhLabel1.Html := '<centre>This is <b>a test</b></centre><p>' +
+  'This is a <a href="http://www.quickzip.org">link</a> (Try it!)';
+mhLabel1.Css := 'b {color:red;}';
+
+7. Run the project, the label should shown correctly, you can move the panel to reposition the label. 
+
+For Turbo Delphi.Net user - How to use mhMessageDialog
+------------------------------------------------------
+1. Create a new project, and add qzMiniHtml_11.dll as reference (under project manager)
+2. Add QuickZip.MiniHtml and QuickZip.MiniHtml.Controls to the uses list.
+3. Add the following code: 
+
+if mhMessageDialog.Show('A Title','<p align="centre">This is <u>a test</u></p>',
+  'u {color:white;}', MessageBoxButtons.OKCancel, Color.PaleGoldenrod) = DialogResult.OK then
+  begin
+    //Do something
+  end;

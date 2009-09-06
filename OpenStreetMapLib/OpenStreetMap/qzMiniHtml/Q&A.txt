@@ -1,0 +1,68 @@
+
+
+------------------------------------------------------------------------------------------------
+Q. How many variation is qzMiniHtml?
+A. QzMiniHtml    - very simple implementation of html, used in Tips n Tricks in QuickZip3
+   (Delphi.W32)    not released at that time because there was better component at that time.
+                   (now included in QzMiniHtml2 package)
+
+   QzMiniHtml2   - This component was intended to design for full Html support for QuickZip40
+   (Delphi.W32)    (although it end up used in few dialogs only).
+                   Version 2 is a lot more complicated than the last one, 
+                    1. New parsing code, html syntax is now parsed, updated and drew. 
+                    2. Supported tags - Most standard Html tag supported.
+                                        including fontStyles, tables and user defined.
+                    3. More controls - including ScrollBox, CheckBox, Marquee.
+                    4. Database support - coded by Wilfrid, please check the forum.
+                       PDF Output support
+ 
+                    More info here:
+       	            http://www.quickzip.org/forums/viewtopic.php?t=278  
+
+   qzMiniHtml.net - QzMiniHtml2 is not portable to dotNet environment (even with VCL.Net),
+   (Delphi.Net)     so qzMiniHtml.net is a full rewrite, the major update as below:
+                    1. Full dotNet 1.1 support, including Compact Framework
+                    2. Casade style sheet support.
+                    3. Folder like childTag List, which makes locating a tag faster.
+                    4. Reduce amount of tag types (e.g. bold, italic ---> fontStyleTag)
+                    5. Downloading from http/ftp
+                         
+                    This version is now abandoned because it does not working too well,
+                    The assembly (.dll) compilied by D.Net include Vcl.Net which make it 
+                    large, plus you cannot use 2 assembly compilied by D.Net at a time.
+                    The Set syntax is not usable in C# and VB.Net.                    
+                                  
+                    More info here:
+	            http://www.quickzip.org/forums/viewtopic.php?t=546  
+
+   qzMiniHtml.net - qzMiniHtml.net version is another complete rewrite using C#, 
+   (C#)             resulting smaller dll size and better compatibility, features included :
+                    1. More accurate text width estimation.
+                    2. Multiple ways of output. (Graphics only at this time, can support more)
+                    3. Multiple ways of input. (Text, Html, BBCode, can support more)
+                    4. Reduced amount of tag types and memory usage.
+                    5. WYSIWYG editor. (Not completed)
+                    6. NUnit support for debugging.
+
+
+------------------------------------------------------------------------------------------------
+Q. Whats the difference between qzMiniHtml_11.dll and qzMiniHtml_20.dll?
+A. qzMiniHtml_11.dll is based on dotNet 1.1, and qzMiniHtml_20.dll is based on dotNet 2.0
+   if you using Borland BDS or Turbo line products use qzMiniHtml_11.dll,
+   (Turbo Explorer user please read TurboExplorerUser.txt as well)
+   SharpDevelop2+ and VS2005+ user can use qzMiniHtml_20.dll.
+   qzMiniHtml_20.dll support SmartTags, which makes developement easier.
+
+------------------------------------------------------------------------------------------------
+Q. What kind of syntax is supported?
+A. I havent prepared a list yet, but these tags supported:
+   
+   html   : a, b, i, s, u, font, br, p, indent, ol, ul, li, sub, sup, centre
+   css    : please see http://www.quickzip.org/forums/viewtopic.php?t=563
+   bbcode : a, b, s, i, url, color, size, centre, br(same as linebreak)
+
+   More tags will be added when my implementation is getting more stable.
+------------------------------------------------------------------------------------------------
+Q. Isnt this product Opensource?
+A. Yes for the W32 version, because it will be troublesome to install W32 version without source.
+   dotNet version will likely be turned to opensource when everything is completed. 
