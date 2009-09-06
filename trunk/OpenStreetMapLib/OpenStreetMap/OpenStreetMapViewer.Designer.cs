@@ -70,7 +70,6 @@ namespace OpenStreetMap
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OpenStreetMapViewer_MouseMove);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpenStreetMapViewer_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OpenStreetMapViewer_MouseDown);
-            this.MouseHover += new System.EventHandler(this.OpenStreetMapViewer_MouseHover);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OpenStreetMapViewer_MouseUp);
             this.ResumeLayout(false);
             this.PerformLayout();

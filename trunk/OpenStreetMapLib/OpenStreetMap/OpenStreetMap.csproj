@@ -53,6 +53,10 @@
     <DocumentationFile>OpenStreetMap.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="qzMiniHtml_20, Version=1.0.2518.3561, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>qzMiniHtml\qzMiniHtml_20.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -114,6 +118,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="qzMiniHtml\license.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="qzMiniHtml\Q&amp;A.txt" />
+    <Content Include="qzMiniHtml\qzMiniHtml_11.dll" />
+    <Content Include="qzMiniHtml\qzMiniHtml_20.dll" />
+    <Content Include="qzMiniHtml\TurboExplorerUser.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
