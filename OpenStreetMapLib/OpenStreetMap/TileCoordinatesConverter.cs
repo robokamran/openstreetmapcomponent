@@ -7,6 +7,9 @@ namespace OpenStreetMap
 {
     /// <summary>
     /// Static class with convert functions between tile and world coordinates
+    /// 
+    /// Written by Florian Beer
+    /// Project homepage: http://code.google.com/p/openstreetmapcomponent
     /// </summary>
     static class TileCoordinatesConverter
     {

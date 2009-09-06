@@ -10,6 +10,9 @@ namespace OpenStreetMap
 {
     /// <summary>
     /// The TileManager downloads, caches and returns tiles for given zoom and coordinates
+    /// 
+    /// Written by Florian Beer
+    /// Project homepage: http://code.google.com/p/openstreetmapcomponent
     /// </summary>
     class TileManager
     {

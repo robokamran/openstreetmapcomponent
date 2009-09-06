@@ -7,6 +7,9 @@ namespace OpenStreetMap
 {
     /// <summary>
     /// Contains all information about a single tile.
+    /// 
+    /// Written by Florian Beer
+    /// Project homepage: http://code.google.com/p/openstreetmapcomponent
     /// </summary>
     class Tile
     {
