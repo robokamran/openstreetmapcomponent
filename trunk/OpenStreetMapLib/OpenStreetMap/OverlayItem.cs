@@ -10,6 +10,9 @@ namespace OpenStreetMap
 {
     /// <summary>
     /// Overlay item is a class for waypoints, POIs
+    /// 
+    /// Written by Florian Beer
+    /// Project homepage: http://code.google.com/p/openstreetmapcomponent
     /// </summary>
     public class OverlayItem
     {

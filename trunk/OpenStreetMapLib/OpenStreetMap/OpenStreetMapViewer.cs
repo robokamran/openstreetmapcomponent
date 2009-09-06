@@ -14,6 +14,9 @@ namespace OpenStreetMap
 {
     /// <summary>
     /// A Control for displaying and navigating in the OpenStreetMap
+    /// 
+    /// Written by Florian Beer
+    /// Project homepage: http://code.google.com/p/openstreetmapcomponent
     /// </summary>
     public partial class OpenStreetMapViewer : UserControl
     {

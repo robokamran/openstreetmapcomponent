@@ -11,6 +11,9 @@ namespace OpenStreetMapSample
 {
     /// <summary>
     /// A sample implementation showing the features of the OpenStreetMapViewer component
+    /// 
+    /// Written by Florian Beer
+    /// Project homepage: http://code.google.com/p/openstreetmapcomponent
     /// </summary>
     public partial class OpenStreetMapSample : Form
     {
