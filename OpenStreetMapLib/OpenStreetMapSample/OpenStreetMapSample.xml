@@ -12,6 +12,9 @@
         <member name="T:OpenStreetMapSample.OpenStreetMapSample">
             <summary>
             A sample implementation showing the features of the OpenStreetMapViewer component
+            
+            Written by Florian Beer
+            Project homepage: http://code.google.com/p/openstreetmapcomponent
             </summary>
         </member>
         <member name="M:OpenStreetMapSample.OpenStreetMapSample.#ctor">

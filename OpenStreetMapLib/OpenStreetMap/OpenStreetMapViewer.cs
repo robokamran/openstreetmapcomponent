@@ -135,6 +135,15 @@ namespace OpenStreetMap
             get { return css; }
             set { css = value; }
         }
+
+        /// <summary>
+        /// Gets and sets the pen used for painting the polygons
+        /// </summary>
+        public Pen PolygonPen
+        {
+            get { return polygonPen; }
+            set { polygonPen = value; }
+        }
         #endregion
 
         #region events
@@ -204,6 +213,7 @@ namespace OpenStreetMap
         int zoom = 0;
 
         List<OverlayItem> overlayItems = new List<OverlayItem>();
+        List<PointF[]> polygonItems = new List<PointF[]>();
 
         PointF topLeftCoord = new PointF(-179, 85);
         PointF bottomRightCoord = new PointF(179, -85);
@@ -219,6 +229,7 @@ namespace OpenStreetMap
         TileManager tileManager = new TileManager("http://tile.openstreetmap.org/", "Cache");
         mhLabel toolTip = null;
         string css = "";
+        Pen polygonPen = Pens.Red;
         #endregion
 
         /// <summary>
@@ -244,12 +255,26 @@ namespace OpenStreetMap
             renderMap();
         }
 
+        public void ClearPolygons()
+        {
+            polygonItems.Clear();
+            renderMap();
+        }
+
         /// <summary>
         /// Removes all overlay items
         /// </summary>
         public void ClearOverlayItems()
         {
             overlayItems.Clear();
+            renderMap();
+        }
+
+        public void AddPolygon(PointF[] polygon)
+        {
+            if (polygon == null)
+                return;
+            polygonItems.Add(polygon);
             renderMap();
         }
 
@@ -309,6 +334,14 @@ namespace OpenStreetMap
                     Rectangle destRect = new Rectangle(loc, item.Icon.Size);
                     g.DrawImage(item.Icon, destRect, 0, 0, item.Icon.Size.Width, item.Icon.Size.Height, GraphicsUnit.Pixel, attr);
                 }
+            }
+            //render polygons
+            foreach (PointF[] pointArray in polygonItems)
+            {
+                List<Point> locArray = new List<Point>();
+                foreach(PointF p in pointArray)
+                    locArray.Add(getLocationForCoordinates(p));
+                g.DrawPolygon(polygonPen, locArray.ToArray());
             }
 
             g.Dispose();

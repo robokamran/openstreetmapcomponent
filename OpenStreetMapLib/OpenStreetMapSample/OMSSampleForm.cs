@@ -69,6 +69,9 @@ namespace OpenStreetMapSample
             openStreetMapViewer1.CenterCoord = new PointF(0, 0);
             openStreetMapViewer1.Zoom = 1;
             UpdateMapStatistic();
+            openStreetMapViewer1.ClearPolygons();
+            openStreetMapViewer1.PolygonPen = Pens.Red;
+            openStreetMapViewer1.AddPolygon(new PointF[] { new PointF(10.0f, -10.0f), new PointF(-10.0f, -10.0f), new PointF(-10.0f, 10.0f), new PointF(10.0f, 10.0f) });
         }
 
         private void openStreetMapViewer1_CoordinatesClicked(PointF coord)
