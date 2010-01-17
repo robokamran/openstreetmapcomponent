@@ -179,7 +179,7 @@ namespace OpenStreetMap
 
         private String getFilename(int zoom, int x, int y)
         {
-            return cacheDirectory + "\\" + zoom.ToString() + "_" + x.ToString() + "_" + y.ToString() + ".png";
+            return cacheDirectory + Path.DirectorySeparatorChar + zoom.ToString() + "_" + x.ToString() + "_" + y.ToString() + ".png";
         }
 
         private Bitmap getTileFromCache(int zoom, int x, int y)
