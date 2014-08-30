@@ -105,11 +105,11 @@ namespace OpenStreetMap
             get { return TileCoordinatesConverter.GetCoordinates(zoom, topLeftTile); }
         }
         /// <summary>
-        /// Gets the actual coordinated of the bottom right corner
+        /// Gets the actual coordinates of the bottom right corner
         /// </summary>
         public PointF BottomRightDisplay
         {
-            get { return TileCoordinatesConverter.GetCoordinates(zoom, topLeftTile); }
+            get { return TileCoordinatesConverter.GetCoordinates(zoom, bottomRightTile); }
         }
 
         /// <summary>
