@@ -1,0 +1,1 @@
+This is a component written in c#, which shows a map of a choosen area. The map data is taken from the openstreetmap project, the tiles are downloaded and saved in a cache directory.
